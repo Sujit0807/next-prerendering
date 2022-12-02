@@ -4,6 +4,10 @@ import { Fragment } from 'react';
 const ProductDetail = (props) => {
   const { loadedProduct } = props;
 
+  if (!loadedProduct) {
+    return <h1>Loading...</h1>;
+  }
+
   return (
     <Fragment>
       <div className="myProductClass">
@@ -32,6 +36,12 @@ export async function getStaticProps(context) {
     (product) => product.id.toString() === productId
   );
 
+  if (!product) {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
     props: {
       loadedProduct: product,
@@ -41,12 +51,12 @@ export async function getStaticProps(context) {
 
 export async function getStaticPaths() {
   const data = await getData();
-  const ids = data.products.map(product => product.id);
-  const pathWithParams = ids.map(id => ({params: {pid: id.toString()}}));
+  const ids = data.products.map((product) => product.id);
+  const pathWithParams = ids.map((id) => ({ params: { pid: id.toString() } }));
 
   return {
     paths: pathWithParams,
-    fallback: false, // page load only when data OR pregenerated-page is ready
+    fallback: true, // page load only when data OR pregenerated-page is ready
   };
 }
 
