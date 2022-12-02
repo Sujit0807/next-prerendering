@@ -56,7 +56,7 @@ export async function getStaticPaths() {
 
   return {
     paths: pathWithParams,
-    fallback: true, // page load only when data OR pregenerated-page is ready
+    fallback: true,
   };
 }
 
