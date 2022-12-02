@@ -5,6 +5,7 @@ const ProductDetail = (props) => {
   const { loadedProduct } = props;
 
   // whenever user directly add url and data not loaded where fallback is true
+  // alternative for this is ==> fallback as 'blocking'
   if(!loadedProduct) {
     return <h1>Loading...</h1>
   }
@@ -45,7 +46,7 @@ export async function getStaticPaths() {
     paths: [
       { params: { pid: '1' } },
     ],
-    fallback: true,
+    fallback: 'blocking', // page load only when data OR pregenerated-page is ready
   };
 }
 
