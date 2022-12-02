@@ -14,3 +14,13 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.myProductClass {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 50%;
+  border: 2px dotted blue;
+  margin: 50px auto;
+}

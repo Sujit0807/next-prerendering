@@ -1,6 +1,7 @@
 import React from 'react';
 // import fs from 'fs/promises';
 import path from 'path';
+import Link from 'next/link';
 
 function Homepage(props) {
   const { products } = props;
@@ -9,7 +10,7 @@ function Homepage(props) {
     <div>
       <ul>
         {products.map((product) => (
-          <li key={product.id}>{product.title}</li>
+          <li key={product.id}><Link href={`/${product.id}/`}>{product.title}</Link></li>
         ))}
       </ul>
     </div>
@@ -51,10 +52,10 @@ export async function getStaticProps(context) {
     },
     revalidate: 10, // in development it does'nt matter
     // coz in development for every request it regenerate but not in server
-    notFound: false,
-    redirect: {
-      destination: '/no-data',
-    },
+    // notFound: false,
+    // redirect: {
+    //   destination: '/no-data',
+    // },
   };
 }
 export default Homepage;
