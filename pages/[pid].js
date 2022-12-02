@@ -4,15 +4,9 @@ import { Fragment } from 'react';
 const ProductDetail = (props) => {
   const { loadedProduct } = props;
 
-  // whenever user directly add url and data not loaded where fallback is true
-  // alternative for this is ==> fallback as 'blocking'
-  if(!loadedProduct) {
-    return <h1>Loading...</h1>
-  }
-
   return (
     <Fragment>
-      <div className='myProductClass'>
+      <div className="myProductClass">
         <h1>{loadedProduct.title}</h1>
         <p>{loadedProduct.description}</p>
         <img src={`${loadedProduct.thumbnail}`} alt="img" />
@@ -21,12 +15,16 @@ const ProductDetail = (props) => {
   );
 };
 
-// // useRouter hook - only works on browser/client, not on the server side to get params
-// // and context - in server side to get params
-
-export async function getStaticProps(context) {
+// Loading Data
+async function getData() {
   const res = await fetch('https://dummyjson.com/products');
   const data = await res.json();
+
+  return data;
+}
+
+export async function getStaticProps(context) {
+  const data = await getData();
 
   const { params } = context;
   const productId = params.pid;
@@ -42,10 +40,12 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
+  const data = await getData();
+  const ids = data.products.map(product => product.id);
+  const pathWithParams = ids.map(id => ({params: {pid: id.toString()}}));
+
   return {
-    paths: [
-      { params: { pid: '1' } },
-    ],
+    paths: pathWithParams,
     fallback: 'blocking', // page load only when data OR pregenerated-page is ready
   };
 }
