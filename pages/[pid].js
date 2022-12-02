@@ -4,6 +4,11 @@ import { Fragment } from 'react';
 const ProductDetail = (props) => {
   const { loadedProduct } = props;
 
+  // whenever user directly add url and data not loaded where fallback is true
+  if(!loadedProduct) {
+    return <h1>Loading...</h1>
+  }
+
   return (
     <Fragment>
       <div className='myProductClass'>
@@ -39,10 +44,8 @@ export async function getStaticPaths() {
   return {
     paths: [
       { params: { pid: '1' } },
-      { params: { pid: '2' } },
-      { params: { pid: '3' } },
     ],
-    fallback: false,
+    fallback: true,
   };
 }
 
