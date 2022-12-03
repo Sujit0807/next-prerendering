@@ -1,6 +1,5 @@
 import { Fragment } from 'react';
 
-// the default behavior for dynamic page is not to preGenerate the page !  e.g [pid].js
 const ProductDetail = (props) => {
   const { loadedProduct } = props;
 
@@ -56,7 +55,7 @@ export async function getStaticPaths() {
 
   return {
     paths: pathWithParams,
-    fallback: true,
+    fallback: false,
   };
 }
 
